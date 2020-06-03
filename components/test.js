@@ -9,9 +9,12 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
+import { Button } from 'antd';
+import QueueAnim from 'rc-queue-anim';
+
 // import Icon, { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 
-import './logo.css'
+// import './logo.css'
 // import {
 //   DesktopOutlined,
 //   PieChartOutlined,
@@ -24,76 +27,114 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-class Test extends Component {
+// class Test extends Component {
+//   state = {
+//     collapsed: false,
+//   };
+
+//   onCollapse = collapsed => {
+//     console.log(collapsed);
+//     this.setState({ collapsed });
+//   };
+
+//   render() {
+//     return (
+//       <Layout style={{ minHeight: '100vh' }}>
+//         <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+//           <div className="logo" />
+//           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+//             <Menu.Item key="1">
+//               <PieChartOutlined />
+//               <span>Option 1</span>
+//             </Menu.Item>
+//             <Menu.Item key="2">
+//               <DesktopOutlined />
+//               <span>Option 2</span>
+//             </Menu.Item>
+//             <SubMenu
+//               key="sub1"
+//               title={
+//                 <span>
+//                   <UserOutlined />
+//                   <span>User</span>
+//                 </span>
+//               }
+//             >
+//               <Menu.Item key="3">Tom</Menu.Item>
+//               <Menu.Item key="4">Bill</Menu.Item>
+//               <Menu.Item key="5">Alex</Menu.Item>
+//             </SubMenu>
+//             <SubMenu
+//               key="sub2"
+//               title={
+//                 <span>
+//                   <TeamOutlined />
+//                   <span>Team</span>
+//                 </span>
+//               }
+//             >
+//               <Menu.Item key="6">Team 1</Menu.Item>
+//               <Menu.Item key="8">Team 2</Menu.Item>
+//             </SubMenu>
+//             <Menu.Item key="9">
+//               <FileOutlined />
+//             </Menu.Item>
+//           </Menu>
+//         </Sider>
+//         <Layout className="site-layout">
+//           <Header className="site-layout-background" style={{ padding: 0 }} />
+//           <Content style={{ margin: '0 16px' }}>
+//             <Breadcrumb style={{ margin: '16px 0' }}>
+//               <Breadcrumb.Item>User</Breadcrumb.Item>
+//               <Breadcrumb.Item>Bill</Breadcrumb.Item>
+//             </Breadcrumb>
+//             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+//               Bill is a cat.
+//             </div>
+//           </Content>
+//           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+//         </Layout>
+//       </Layout>
+//     );
+//   }
+// }
+
+class Test extends Component {  
   state = {
-    collapsed: false,
+   show: true
   };
-
-  onCollapse = collapsed => {
-    console.log(collapsed);
-    this.setState({ collapsed });
-  };
-
+  onClick = () => {
+    this.setState({
+      show: !this.state.show
+    });
+  }
   render() {
     return (
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-          <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1">
-              <PieChartOutlined />
-              <span>Option 1</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <DesktopOutlined />
-              <span>Option 2</span>
-            </Menu.Item>
-            <SubMenu
-              key="sub1"
-              title={
-                <span>
-                  <UserOutlined />
-                  <span>User</span>
-                </span>
-              }
-            >
-              <Menu.Item key="3">Tom</Menu.Item>
-              <Menu.Item key="4">Bill</Menu.Item>
-              <Menu.Item key="5">Alex</Menu.Item>
-            </SubMenu>
-            <SubMenu
-              key="sub2"
-              title={
-                <span>
-                  <TeamOutlined />
-                  <span>Team</span>
-                </span>
-              }
-            >
-              <Menu.Item key="6">Team 1</Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="9">
-              <FileOutlined />
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-              Bill is a cat.
+      <div className="queue-demo">
+        <p className="buttons">
+          <Button type="primary" onClick={this.onClick}>Switch</Button>
+        </p>
+        <QueueAnim className="demo-content">
+          {this.state.show ? [
+            <div className="demo-thead" key="a">
+              <ul>
+                <li />
+                <li />
+                <li />
+              </ul>
+            </div>,
+            <div className="demo-tbody">
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
             </div>
-          </Content>
-          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-        </Layout>
-      </Layout>
+          ] : null}
+        </QueueAnim>
+      </div>
     );
   }
-}
+};
 
 export default Test;

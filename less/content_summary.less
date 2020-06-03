@@ -1,0 +1,68 @@
+@content0: content0;
+
+.@{content0}-wrapper {
+  min-height: 446px;
+  overflow: hidden;
+  background: @template-content-bg-color;
+
+  .@{content0} {
+    height: 100%;
+    padding: 34px 24px;
+
+    >.title-wrapper {
+      margin: 0 auto 48px;
+    }
+
+    &-header-title {
+      color: rgb(51, 74, 94);
+      font-size: 34px;
+    }
+
+    &-subtitle {
+      color: rgb(148, 148, 148);
+      font-size: 18px;
+      padding-left: 150px;
+      padding-right: 150px;
+    }
+
+    &-block {
+      padding: 0 4%;
+      display: inline-block;
+      text-align: center;
+      min-height: 200px;
+      margin-bottom: 24px;
+      img {
+        width: 100%;
+      }
+
+      &-wrapper {
+        position: relative;
+        height: 100%;
+        top: 25%;
+        padding: 20px 0;
+      }
+
+      &.queue-anim-leaving {
+        position: relative !important;
+      }
+
+      &-icon {
+        width: 100px;
+        height: 100px;
+        margin: auto;
+      }
+
+      &-title {
+        line-height: 32px;
+        margin: 10px auto;
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .@{content0}-wrapper {
+    min-height: 880px;
+  }
+}
