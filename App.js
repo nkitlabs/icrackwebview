@@ -3,6 +3,7 @@ import { Route, BrowserRouter  as Router, Switch } from 'react-router-dom'
 import Test  from './components/test'
 import Home from './components/home/home'
 import Blog from './components/blog/blog'
+import BlogList from './components/bloglist/bloglist'
 
 import './less/ant_motion_style.less';
 
@@ -11,11 +12,12 @@ import './less/ant_motion_style.less';
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router onUpdate={() => {console.log('on update'); window.scrollTo(0, 0)}}>
         <div>
           <Switch> 
             <Route path="/test" component={Test} />
             <Route path='/blog/:blogid' component={Blog} />
+            <Route path='/blog' component={BlogList} />
             <Route path="/" component={Home} />
           </Switch>
         </div>

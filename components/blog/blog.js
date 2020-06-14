@@ -15,41 +15,47 @@ const BlogHeaderObj = () => {
     )
 }
 
-const blogReactObj = details.map((item, i) => {
-    const {blogType, info, name} = item
+const blogReactObj = details.map((item) => {
+    const {blogType, info, name, complexInfo} = item
     if (blogType == "text") {
-        return (<div className="blog0-text-info" key={name} id={name}>{info}<br/><br/></div>)
+        if (complexInfo != undefined) {
+            const finalRes = complexInfo.map((item, idx)=>{
+                const {toLink, isBold, isUnderline, text} = item
+                let result = text
+                if (toLink != undefined) {
+                    result = (<u key={name+'-'+idx}><a target="_blank" href={toLink} className="text-dark">{result}</a></u>)
+                }
+                if (isBold) {
+                    result = (<b key={name+'-'+idx}>{result}</b>)
+                }
+                if (isUnderline && toLink == undefined) {
+                    result = (<u key={name+'-'+idx}>{result}</u>)
+                }
+                return result
+            })
+            return (
+                <div key={name} id={name}>
+                    <span className="blog0-text-info">
+                        {finalRes}
+                    </span>
+                    <br/><br/>
+                </div>
+            )
+        }
+        return (<div key={name} id={name}><span className="blog0-text-info">{info}</span><br/><br/></div>)
     }
     else if (blogType == "header2") {
-        return (<div className="blog0-header2"  key={name} id={name}>{info}<br/><br/></div>)
+        return (<div key={name} id={name}><span className="blog0-header2">{info}</span><br/><br/></div>)
     }
 })
 
 function Blog(props) {
-    const { match } = props
-    const { params } = match
-    const { blogid: blogID } = params
-    const treeData = [
-        {
-            title: 'parent 0',
-            key: '0-0',
-            children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-            ],
-        },
-        {
-            title: 'parent 1',
-            key: '0-1',
-            children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-            ],
-        },
-        ];
-    const onSelect = (keys, event) => {
-    console.log('Trigger Select', keys, event);
-    };
+    // const { match } = props
+    // const { params } = match
+    // const { blogid: blogID } = params
+    // const onSelect = (keys, event) => {
+    // console.log('Trigger Select', keys, event);
+    // };
 
     // const onExpand = () => {
     // console.log('Trigger Expand');
@@ -62,7 +68,7 @@ function Blog(props) {
                     <TableOfContent data={blogObj}/>
                 </div>
                 <div className='blog0-wrapper col-8'>
-                    {blogID}
+                    {/* {blogID} */}
                     {BlogHeaderObj()}
                     {blogReactObj}
                     {/* <div>test <a target="_blank" href="https://www.google.com">home</a>to be test</div> */}

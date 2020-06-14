@@ -1,30 +1,22 @@
 
-import React, { Component } from 'react';
+import React, { Component, useRef, useEffect } from 'react';
 import Header from '../header'
+import Footer from '../footer'
 import Banner from './banner'
 import ContentSummary from './content_summary'
 import ExampleBlog from './example_blog'
 
-class Home extends Component { 
-    render(){
-        return(
-            <div>
-                <Header />
-                <Banner />
-                <ContentSummary />
-                <ExampleBlog />
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-            </div>
-        )
-    }
-
+function Home() { 
+    let readMoreRef = useRef()
+    return(
+        <div>
+            <Header />
+            <Banner readMoreRef={readMoreRef} />
+            <div ref={readMoreRef}><ContentSummary/></div>
+            <ExampleBlog />
+            <Footer />
+        </div>
+    )
 }
   
 export default Home;

@@ -7,9 +7,17 @@
         {
             "name": "block-00001-1",
             "blogType": "text",
-            "info": "As explained in the Introduction, the world order is now rapidly shifting in important ways that have never happened in our lifetimes but have happened many times before in history. My objective is to show you those cases and the mechanics that drove them and, with that perspective, attempt to imagine the future.",
-            "link": [
-                {"start": 20, "end": 32, "toLink": "https://www.google.com"}
+            "complexInfo": [
+                {
+                    "text": "As explained in the "
+                },
+                {
+                    "text": "Introduction",
+                    "toLink": "https://www.google.com"
+                },
+                {
+                    "text": ", the world order is now rapidly shifting in important ways that have never happened in our lifetimes but have happened many times before in history. My objective is to show you those cases and the mechanics that drove them and, with that perspective, attempt to imagine the future."
+                }
             ]
         },
         {
