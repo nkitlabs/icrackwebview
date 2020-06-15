@@ -3,6 +3,33 @@ import { useLocation } from 'react-router-dom'
 import Header from '../header'
 import Footer from '../footer'
 import { Pagination } from 'antd';
+import { displayTimeDiffNow, displayText } from '../../utils/utils'
+
+
+const maxHeaderLen = 50
+const maxExTextLen = 110
+
+const blogObject = (blog) => {
+    const {name, imgPath, exText, updatedAt, author, id} = blog
+    const keyObject = 'bloglist-'+id
+    const blogLink = '/blog/'+id
+    return (
+        <tr key={keyObject}>
+            <td className='p-1 row flex-xl-nowrap w-100 m-0'>
+                <div className="col-xl-4 col-md-4">
+                    <a href={blogLink}>
+                        <img className="bloglist0-img-blog" src={imgPath} width='100%' alt='img'/>
+                    </a>
+                </div>
+                <div className="col-xl-8 col-md-8">
+                    <a href={blogLink}><div className="bloglist0-blog-header">{displayText(name, maxHeaderLen)}</div></a>
+                    <div className="bloglist0-blog-subheader">{author} - {displayTimeDiffNow(updatedAt)}</div>
+                    <div className="bloglist0-blog-detail">{displayText(exText, maxExTextLen)}</div>
+                </div>
+            </td>
+        </tr>
+    )
+}
 
 function BlogList(props) {
     const { search } = useLocation() || {}
@@ -11,6 +38,8 @@ function BlogList(props) {
     const totalBlog = 95
     const blogsPerPage = 10
     const lastPage = Math.ceil(totalBlog / blogsPerPage)
+    let [blogs, setBlogs] = useState([])
+
 
     let [isLoading, setIsLoading] = useState(false)
 
@@ -18,6 +47,8 @@ function BlogList(props) {
         setIsLoading(true)
         setTimeout(() => {
             setIsLoading(false)
+            const { result } = require('../../data/blog_list.json')
+            setBlogs(result)
             window.scrollTo(0,0)
         }, 3000)
 
@@ -45,7 +76,8 @@ function BlogList(props) {
                             <div className="py-3 row flex-xl-nowrap">
                                 <table className="table">
                                     <tbody>
-                                        <tr>
+                                        {blogs.map((blog) => blogObject(blog))}
+                                        {/* <tr>
                                             <td className='p-1 row flex-xl-nowrap w-100 m-0'>
                                                 <div className="col-xl-4 col-md-4">
                                                     <img className="bloglist0-img-blog" src='./img/blog01-test.jpg' width='100%' alt='img'/>
@@ -92,7 +124,7 @@ function BlogList(props) {
                                                     <div className="bloglist0-blog-detail">This is what I want to tell you when I passed 26 years old. ...</div>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>

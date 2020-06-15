@@ -1,5 +1,5 @@
 import React from 'react';
-import { timeDiffNow, displayText } from '../../utils/utils'
+import { displayTimeDiffNow, displayText } from '../../utils/utils'
 
 const maxHeaderLen = 50
 const maxExTextLen = 110
@@ -16,7 +16,7 @@ const firstBlogObj = (blog) => {
         </a>
       </div>
         <a href={blogLink}><div className="blogexample0-blog-header">{displayText(name, maxHeaderLen)}</div></a>
-        <div className="blogexample0-blog-subheader">{author} - {timeDiffNow(updatedAt)}</div>
+        <div className="blogexample0-blog-subheader">{author} - {displayTimeDiffNow(updatedAt)}</div>
         <div className="blogexample0-blog-detail">{displayText(exText, maxExTextLen)}</div>
     </div>
   )
@@ -34,7 +34,7 @@ const secondBlogObj = (blog) => {
       </div>
       <div className="col-xl-8 col-md-8">
         <a href={blogLink}><div className="blogexample0-blog-header">{displayText(name, maxHeaderLen)}</div></a>
-        <div className="blogexample0-blog-subheader">{author} - {timeDiffNow(updatedAt)}</div>
+        <div className="blogexample0-blog-subheader">{author} - {displayTimeDiffNow(updatedAt)}</div>
         <div className="blogexample0-blog-detail">{displayText(exText, maxExTextLen)}</div>
       </div>
     </div>
@@ -49,7 +49,7 @@ const otherBlogsObject = (blog) => {
     <tr key={keyObject}>
       <td className='p-1'>
         <a href={blogLink}><div className="blogexample0-blog-header">{displayText(name, maxHeaderLen)}</div></a>
-        <div className="blogexample0-blog-subheader">{author} - {timeDiffNow(updatedAt)}</div>
+        <div className="blogexample0-blog-subheader">{author} - {displayTimeDiffNow(updatedAt)}</div>
       </td>
     </tr>
   )

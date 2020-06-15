@@ -17,7 +17,7 @@ export const getChildrenToRender = (item, i) => {
   return React.createElement(tag, { key: i.toString(), ...item }, children);
 };
 
-export const  timeDiffNow = (s) => {
+export const  displayTimeDiffNow = (s) => {
   const now = Date.now()
   const t = new Date(s)
   const diff = now-t
