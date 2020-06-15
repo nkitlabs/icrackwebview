@@ -1,5 +1,6 @@
 import React from 'react';
 import { displayTimeDiffNow, displayText } from '../../utils/utils'
+import { RightOutlined } from '@ant-design/icons'
 
 const maxHeaderLen = 50
 const maxExTextLen = 110
@@ -65,18 +66,22 @@ function ExampleBlog(){
     <div className="blogexample0-wrapper">
       <div className="title-header">Our Blogs</div>
       <div className="row flex-xl-nowrap w-100">
-          <div className="col-xl-6 col-md-6">
-            {firstBlogObj(firstBlog)}
+        <div className="col-xl-6 col-md-6">
+          {firstBlogObj(firstBlog)}
+        </div>
+        <div className="col-xl-6 col-md-6">
+          {secondBlogObj(secondBlog)}
+          <table className="table">
+            <tbody>
+              {otherBlogs.map((blog) => otherBlogsObject(blog))}
+            </tbody>
+          </table>
+          <div className="text-right">
+            <a href='/blog' className="blogexample0-blog-header py-2 text-right">
+              Read more <RightOutlined />
+            </a>
           </div>
-          <div className="col-xl-6 col-md-6">
-            {secondBlogObj(secondBlog)}
-            <table className="table">
-              <tbody>
-                {otherBlogs.map((blog) => otherBlogsObject(blog))}
-              </tbody>
-            </table>
-            {/* </div> */}
-          </div>
+        </div>
       </div>
     </div>  
   );
