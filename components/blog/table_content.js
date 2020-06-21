@@ -2,7 +2,8 @@ import React, { Component, useState } from 'react';
 
 function TableOfContent (props) {
     const { data } = props
-    const { details, header } = data
+    let { details, name } = data
+    details = details || []
     const blogHeader = details.filter((item) => {
         const {blogType} = item
         return blogType.startsWith('header')
@@ -15,7 +16,7 @@ function TableOfContent (props) {
                         <tbody>
                             <tr key="header-toc">
                                 <td className='p-1'>
-                                    <a href="#BlogHeader" className="text-dark" style={{display:'block', fontSize:'14px'}}>{header}</a>
+                                    <a href="#BlogHeader" className="text-dark" style={{display:'block', fontSize:'14px'}}>{name}</a>
                                 </td>
                             </tr>
                             {blogHeader.map((item) => {

@@ -4,6 +4,7 @@ import Header from '../header'
 import Footer from '../footer'
 import { Pagination } from 'antd';
 import { displayTimeDiffNow, displayText } from '../../utils/utils'
+import FirebaseEngine from '../../app/firebase'
 
 
 const maxHeaderLen = 50
@@ -34,29 +35,39 @@ const blogObject = (blog) => {
 function BlogList(props) {
     const { search } = useLocation() || {}
     const params = new URLSearchParams(search)
-    const currentPage = params.get('page') || 1
-    const totalBlog = 95
-    const blogsPerPage = 10
-    const lastPage = Math.ceil(totalBlog / blogsPerPage)
+    const currentPage = parseInt(params.get('page')) || 1
+    const [totalBlog, setTotalBlog] = useState(1)
+    const blogsPerPage = 2
     let [blogs, setBlogs] = useState([])
-
+    let [isFirstTime, setIsFirstTime] = useState(true)
 
     let [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        setIsLoading(true)
-        setTimeout(() => {
+        FirebaseEngine.countDocument().then(res => {
+            setTotalBlog(res)
+            setIsLoading(true)
+            return res
+        })
+        .then((res) => FirebaseEngine.getDocumentByPage(res, currentPage, blogsPerPage))
+        .then(res => {
             setIsLoading(false)
-            const { result } = require('../../data/blog_list.json')
-            setBlogs(result)
+            setBlogs(res)
             window.scrollTo(0,0)
-        }, 3000)
+            setIsFirstTime(false)
+        })
+    }, [])
 
+    useEffect(() => {
+        if (!isFirstTime) {
+            setIsLoading(true)
+            FirebaseEngine.getDocumentByPage(totalBlog, currentPage, blogsPerPage).then(res => {
+                setIsLoading(false)
+                setBlogs(res)
+                window.scrollTo(0,0)
+            })
+        }
     }, [currentPage])
-    // useEffect(() => {
-    //     console.log(1)
-    //     window.scrollTo(0, 0)
-    // }, [currentPage])
 
     return(
         <div>
@@ -77,54 +88,6 @@ function BlogList(props) {
                                 <table className="table">
                                     <tbody>
                                         {blogs.map((blog) => blogObject(blog))}
-                                        {/* <tr>
-                                            <td className='p-1 row flex-xl-nowrap w-100 m-0'>
-                                                <div className="col-xl-4 col-md-4">
-                                                    <img className="bloglist0-img-blog" src='./img/blog01-test.jpg' width='100%' alt='img'/>
-                                                </div>
-                                                <div className="col-xl-8 col-md-8">
-                                                    <div className="bloglist0-blog-header">My first blog ever</div>
-                                                    <div className="bloglist0-blog-subheader">Natthakun Kitthaworn - 2 Hours ago</div>
-                                                    <div className="bloglist0-blog-detail">This is what I want to tell you when I passed 26 years old. ...</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className='p-1 row flex-xl-nowrap w-100 m-0'>
-                                                <div className="col-xl-4 col-md-4">
-                                                    <img className="bloglist0-img-blog" src='./img/blog01-test.jpg' width='100%' alt='img'/>
-                                                </div>
-                                                <div className="col-xl-8 col-md-8">
-                                                    <div className="bloglist0-blog-header">My first blog ever</div>
-                                                    <div className="bloglist0-blog-subheader">Natthakun Kitthaworn - 2 Hours ago</div>
-                                                    <div className="bloglist0-blog-detail">This is what I want to tell you when I passed 26 years old. ...</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className='p-1 row flex-xl-nowrap w-100 m-0'>
-                                                <div className="col-xl-4 col-md-4">
-                                                    <img className="bloglist0-img-blog" src='./img/blog01-test.jpg' width='100%' alt='img'/>
-                                                </div>
-                                                <div className="col-xl-8 col-md-8">
-                                                    <div className="bloglist0-blog-header">My first blog ever</div>
-                                                    <div className="bloglist0-blog-subheader">Natthakun Kitthaworn - 2 Hours ago</div>
-                                                    <div className="bloglist0-blog-detail">This is what I want to tell you when I passed 26 years old. ...</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className='p-1 row flex-xl-nowrap w-100 m-0'>
-                                                <div className="col-xl-4 col-md-4">
-                                                    <img className="bloglist0-img-blog" src='./img/blog01-test.jpg' width='100%' alt='img'/>
-                                                </div>
-                                                <div className="col-xl-8 col-md-8">
-                                                    <div className="bloglist0-blog-header">My first blog ever</div>
-                                                    <div className="bloglist0-blog-subheader">Natthakun Kitthaworn - 2 Hours ago</div>
-                                                    <div className="bloglist0-blog-detail">This is what I want to tell you when I passed 26 years old. ...</div>
-                                                </div>
-                                            </td>
-                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>
@@ -136,10 +99,10 @@ function BlogList(props) {
                         defaultCurrent={currentPage}
                         total={totalBlog}
                         showSizeChanger={false}
+                        pageSize = {blogsPerPage}
                         onChange={(page, pageSize) => {
                             props.history.push('/blog?page='+page)
                         }}
-                        // itemRender={(page, type, originalElement) => renderPagination(page, type, originalElement, currentPage, lastPage)}
                     />
                 </div>
             </div>

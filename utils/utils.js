@@ -18,6 +18,10 @@ export const getChildrenToRender = (item, i) => {
 };
 
 export const  displayTimeDiffNow = (s) => {
+  if (typeof s  != 'string') {
+    return ''
+  }
+
   const now = Date.now()
   const t = new Date(s)
   const diff = now-t
@@ -34,13 +38,28 @@ export const  displayTimeDiffNow = (s) => {
   } else if (diff < 8 * 24 * 60 * 60 * 1000) {
     return Math.floor(diff/(24*60*60*1000)) + ' days ago'
   } else {
-    return t.format('dd MMM YYYY')
+    return t.toDateString()
   }
 }
 
 export const displayText = (s, n) => {
+  if (typeof s  != 'string') {
+    return ''
+  }
   if (s.length > n) {
     return s.substring(0, n-3) + '...'
   }
   return s
+}
+
+export const getFireStoreURLImage = (s) => {
+  if (typeof s  != 'string') {
+    return ''
+  }
+  if (s.charAt(0) == '.') {
+    s = s.substring(1)
+  }
+  const firebaseURL = 'https://firebasestorage.googleapis.com/v0/b/inthecircle-f2f6c.appspot.com/o/'
+  const params = '?alt=media'
+  return firebaseURL + encodeURIComponent(s.substring(1)) + params
 }
